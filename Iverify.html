@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iverify</title>
+<style>:root{--bg:#f4f7fa;--card:#fff;--text:#14232f;--muted:#5b6b78;--line:#d9e2e9;--brand:#0b6e8a;--brand-d:#08566c;
+--ok:#0a6b3a;--okbg:#e3f5ea;--bad:#a3262a;--badbg:#fde8e8;--warn:#8a5a00;--warnbg:#fff3d6;--none:#46535e;--nonebg:#e9eef2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a22;--card:#16252f;--text:#e6eef3;--muted:#9fb0bc;--line:#2a3d4a;--brand:#4cb6d2;--brand-d:#7fcbe0;
+--ok:#7fdca5;--okbg:#12362a;--bad:#ff9d9f;--badbg:#3d1a1c;--warn:#ffd27a;--warnbg:#3b2f10;--none:#c3d0d9;--nonebg:#223441}}
+:root[data-theme="dark"]{--bg:#0e1a22;--card:#16252f;--text:#e6eef3;--muted:#9fb0bc;--line:#2a3d4a;--brand:#4cb6d2;--brand-d:#7fcbe0;
+--ok:#7fdca5;--okbg:#12362a;--bad:#ff9d9f;--badbg:#3d1a1c;--warn:#ffd27a;--warnbg:#3b2f10;--none:#c3d0d9;--nonebg:#223441}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+.top{background:var(--card);border-bottom:3px solid var(--brand)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;color:var(--brand)}
+.brand strong{display:block;color:var(--text);font-size:1.05rem;line-height:1.2}
+.brand small,.muted{color:var(--muted)}
+.brand small{display:block}
+main{padding-top:20px;padding-bottom:20px}
+footer{padding-top:8px;padding-bottom:28px;font-size:.85rem}
+h1{font-size:1.35rem;margin:0 0 6px}h2{font-size:1.1rem;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input[type=text],select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:10px 0}
+.chk input{margin-top:5px;width:18px;height:18px;flex:none}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-d)}
+.btn.sec{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.btn.sm{padding:4px 10px;font-size:.85rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}.row input{flex:1;min-width:180px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{background:var(--nonebg);border-radius:999px;padding:4px 6px 4px 12px;display:inline-flex;gap:6px;align-items:center}
+.chip button{border:0;background:var(--line);color:var(--text);border-radius:50%;width:22px;height:22px;cursor:pointer;line-height:1}
+.banner{border-radius:10px;padding:12px 14px;margin:12px 0;font-weight:600;border:1px solid transparent}
+.ok{background:var(--okbg);color:var(--ok)}.bad{background:var(--badbg);color:var(--bad)}
+.warn{background:var(--warnbg);color:var(--warn)}.none{background:var(--nonebg);color:var(--none)}
+.banner.bad{border-color:var(--bad)}.banner.warn{border-color:var(--warn)}.banner.ok{border-color:var(--ok)}
+.banner small{display:block;font-weight:400;margin-top:2px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:.85rem;white-space:nowrap}
+.err{color:var(--bad);font-weight:600;margin:8px 0 0}
+details{margin-top:10px}summary{cursor:pointer;color:var(--brand);font-weight:600}
+#who{font-size:.9rem;text-align:right}
+@media print{.top .btn,form,.chips button,.noprint,footer .noprint{display:none!important}body{background:#fff;color:#000}.card{border:1px solid #999}}
+.drug{border:1px solid var(--line);border-radius:10px;margin:0 0 12px;padding:4px 14px 12px}
+.drug legend{font-weight:700;color:var(--brand);padding:0 6px}
+.g3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}.g2{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+@media (max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+input[type=number]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap bar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="8" fill="currentColor"/><path d="M14 8h6v6h6v6h-6v6h-6v-6H8v-6h6z" fill="#fff"/></svg>
+      <div><strong>Iverify</strong><small>Verifikasi kompatibilitas campuran obat intravena</small></div>
+    </div>
+    <div id="who"></div>
+  </div>
+</header>
+<main class="wrap" id="app" aria-live="polite"><p class="muted">Memuat data…</p></main>
+<footer class="wrap muted">Alat bantu referensi, bukan pengganti penilaian apoteker atau dokter.</footer>
+<script>window.KG_DATA = {
+  C: `Acyclovir: D5W, LR, Amikacin, Ampho B kolesteril sulfat, Ampisilin, Anidulafungin, Argatroban, Atracurium, Azitromisin, Bumetanide, Ca glukonat, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone, Cimetidine
+Amikacin: D5W, D5½S, NS, LR, Acyclovir, Amiodarone, Anidulafungin, Argatroban, Atracurium, Aztreonam, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone
+Aminophylline: D5W, D5½S, NS, LR, Ampho B kolesteril sulfat, Anidulafungin, Atracurium, Aztreonam
+Amiodarone: Amikacin, Ampho B, Anidulafungin, Atracurium, Atropin, Bumetanide, Ca klorida, Ca glukonat, Kaspofungin, Cefotaxime
+Ampho B: Amiodarone
+Ampho B kolesteril sulfat: D5W, Acyclovir, Aminophylline, Cefoxitin, Ceftizoxime
+Ampisilin: Acyclovir, Anidulafungin, Argatroban, Azitromisin, Aztreonam
+Ampisilin-sulbaktam: Anidulafungin, Argatroban, Azitromisin, Aztreonam, Bumetanide
+Anidulafungin: D5W, NS, Acyclovir, Amikacin, Aminophylline, Amiodarone, Ampisilin, Ampisilin-sulbaktam, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone, Cimetidine
+Argatroban: D5W, NS, LR, Acyclovir, Amikacin, Ampisilin, Ampisilin-sulbaktam, Anidulafungin, Atracurium, Atropin, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone
+Atracurium: D5½S, Acyclovir, Amikacin, Aminophylline, Amiodarone, Anidulafungin, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Cefotaxime, Cefoxitin, Ceftizoxime, Ceftriaxone, Cimetidine
+Atropin: NS, LR, Amiodarone, Argatroban
+Azitromisin: D5W, D5½S, NS, LR, Acyclovir, Ampisilin, Ampisilin-sulbaktam, Anidulafungin, Argatroban, Atracurium, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Cefoxitin, Ceftizoxime
+Aztreonam: D5W, NS, LR, Amikacin, Aminophylline, Ampisilin, Ampisilin-sulbaktam, Anidulafungin, Argatroban, Atracurium, Bumetanide, Butorfanol, Kaspofungin, Cefazolin, Cefotaxime, Cefotetan, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone, Cimetidine
+Bumetanide: D5W, NS, LR, Acyclovir, Amikacin, Amiodarone, Ampisilin-sulbaktam, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Kaspofungin, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone
+Butorfanol: Aztreonam
+Ca klorida: D5W, D5½S, NS, LR, Amiodarone
+Ca glukonat: D5½S, LR, Acyclovir, Amikacin, Amiodarone, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime
+Kaspofungin: NS, Amikacin, Amiodarone, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Ceftizoxime
+Cefazolin: D5W, D5½S, LR, Acyclovir, Amikacin, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Cefoxitin, Ceftazidime, Ceftizoxime, Ceftriaxone
+Cefotaxime: D5W, D5½S, NS, LR, Acyclovir, Amikacin, Amiodarone, Anidulafungin, Argatroban, Atracurium, Aztreonam, Bumetanide, Ca glukonat, Cefoxitin, Ceftriaxone
+Cefotetan: NS, Aztreonam
+Cefoxitin: D5W, D5½S, NS, LR, Acyclovir, Amikacin, Ampho B kolesteril sulfat, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Cefazolin, Cefotaxime, Ceftazidime, Ceftriaxone
+Ceftazidime: D5W, D5½S, NS, LR, Acyclovir, Amikacin, Anidulafungin, Argatroban, Aztreonam, Bumetanide, Ca glukonat, Cefazolin, Cefoxitin, Ceftizoxime, Ceftriaxone
+Ceftizoxime: D5W, D5½S, NS, LR, Acyclovir, Amikacin, Ampho B kolesteril sulfat, Anidulafungin, Argatroban, Atracurium, Azitromisin, Aztreonam, Bumetanide, Ca glukonat, Kaspofungin, Cefazolin, Ceftazidime, Ceftriaxone
+Ceftriaxone: D5W, NS, Acyclovir, Amikacin, Anidulafungin, Argatroban, Atracurium, Aztreonam, Bumetanide, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftizoxime`,
+  X: `Acyclovir: Ampisilin-sulbaktam, Aztreonam
+Alteplase: LR
+Amikacin: Ampho B kolesteril sulfat, Azitromisin
+Amiodarone: LR, Ampisilin-sulbaktam, Azitromisin, Cefazolin, Ceftazidime
+Ampho B: D5½S, NS, LR, Anidulafungin, Aztreonam, Kaspofungin
+Ampho B kolesteril sulfat: NS, Amikacin, Ampisilin, Ampisilin-sulbaktam, Aztreonam, Butorfanol, Ca klorida, Ca glukonat, Cefazolin, Ceftazidime, Ceftriaxone, Klorpromazin, Cimetidine
+Ampisilin: Ampho B kolesteril sulfat, Kaspofungin
+Ampisilin-sulbaktam: Acyclovir, Amiodarone, Ampho B kolesteril sulfat, Kaspofungin
+Anidulafungin: Ampho B
+Atracurium: LR, Ceftazidime
+Azitromisin: Amikacin, Amiodarone, Aztreonam, Cefotaxime, Ceftazidime, Ceftriaxone
+Aztreonam: Acyclovir, Ampho B, Ampho B kolesteril sulfat, Azitromisin, Klorpromazin
+Butorfanol: Ampho B kolesteril sulfat
+Ca klorida: Ampho B kolesteril sulfat
+Ca glukonat: Ampho B kolesteril sulfat, Ceftriaxone
+Kaspofungin: D5W, D5½S, Ampho B, Ampisilin, Ampisilin-sulbaktam, Cefazolin, Cefotaxime, Cefoxitin, Ceftazidime, Ceftriaxone
+Cefazolin: Amiodarone, Ampho B kolesteril sulfat, Kaspofungin, Cefotaxime
+Cefotaxime: Azitromisin, Kaspofungin, Cefazolin, Ceftazidime, Ceftizoxime
+Cefoxitin: Kaspofungin, Ceftizoxime
+Ceftazidime: Amiodarone, Ampho B kolesteril sulfat, Atracurium, Azitromisin, Kaspofungin, Cefotaxime
+Ceftizoxime: Cefotaxime, Cefoxitin
+Ceftriaxone: Ampho B kolesteril sulfat, Azitromisin, Ca glukonat, Kaspofungin`,
+  U: `Acyclovir: NS, Kaspofungin
+Alteplase: D5W, NS
+Aminophylline: Ceftazidime
+Amiodarone: D5W, NS, Ceftizoxime, Ceftriaxone
+Ampho B: D5W
+Ampisilin: D5W, D5½S, NS, LR, Bumetanide
+Ampisilin-sulbaktam: D5W, D5½S, NS, LR
+Atracurium: D5W, NS
+Bumetanide: Ampisilin, Ca klorida
+Ca klorida: Bumetanide
+Ca glukonat: D5W, NS
+Kaspofungin: LR, Acyclovir
+Cefazolin: NS
+Ceftazidime: Aminophylline
+Ceftizoxime: Amiodarone
+Ceftriaxone: D5½S, LR, Amiodarone`
+};
+</script>
+<script>(() => {
+'use strict';
+const D = window.KG_DATA;
+const $app = document.getElementById('app');
+const $who = document.getElementById('who');
+const MAX = 8;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ST = {
+  C: {label: 'Mungkin kompatibel (C)', cls: 'ok'},
+  X: {label: 'Inkompatibel (X)', cls: 'bad'},
+  U: {label: 'Data bertentangan (Ø)', cls: 'warn'},
+  K: {label: 'Konflik data sumber', cls: 'bad'},
+  N: {label: 'Tidak ada data', cls: 'none'}
+};
+// State tunggal: phase = loading | error | verify | ready
+const S = {phase: 'loading', err: '', msg: '', db: null, info: null, who: null, picks: []};
+
+const store = {
+  get() { try { return JSON.parse(sessionStorage.getItem('kg_who')); } catch (e) { return null; } },
+  set(v) { try { sessionStorage.setItem('kg_who', JSON.stringify(v)); } catch (e) {} },
+  del() { try { sessionStorage.removeItem('kg_who'); } catch (e) {} }
+};
+
+function parse(text, name) {
+  const m = new Map();
+  text.trim().split('\n').forEach((line, i) => {
+    const k = line.indexOf(':');
+    if (k < 1) throw new Error(`Bagian ${name}, baris ${i + 1} tidak valid.`);
+    const items = line.slice(k + 1).split(',').map(s => s.trim()).filter(Boolean);
+    if (!items.length) throw new Error(`Bagian ${name}: daftar kosong untuk "${line.slice(0, k)}".`);
+    m.set(line.slice(0, k).trim(), new Set(items));
+  });
+  return m;
+}
+
+function build() {
+  if (!D || !D.C || !D.X || !D.U) throw new Error('File data.js tidak termuat atau formatnya salah.');
+  const db = {C: parse(D.C, 'C'), X: parse(D.X, 'X'), U: parse(D.U, 'U')};
+  const all = new Set();
+  for (const t of 'CXU') for (const [k, v] of db[t]) {
+    all.add(k);
+    for (const x of v) all.add(x);
+  }
+  db.items = [...all].sort((a, b) => a.localeCompare(b));
+  db.drugs = db.items.filter(i => !(i in FLUIDS));
+  S.db = db;
+}
+
+function status(a, b) {
+  let s = '';
+  for (const t of 'CXU') if (S.db[t].get(a)?.has(b) || S.db[t].get(b)?.has(a)) s += t;
+  if (s.includes('C') && s.includes('X')) return 'K';
+  if (s.includes('X')) return 'X';
+  if (s.includes('U')) return 'U';
+  if (s.includes('C')) return 'C';
+  return 'N';
+}
+
+const badge = k => `<span class="badge ${ST[k].cls}">${ST[k].label}</span>`;
+
+function verifyView() {
+  return `<section class="card">
+  <h1>Verifikasi data</h1>
+  <p class="muted">Lengkapi verifikasi berikut agar hasil pengecekan dapat dicatat dan ditelusuri.</p>
+  <form id="vf">
+    <label for="nama">Nama pengguna</label><input id="nama" name="nama" type="text" required maxlength="80" autocomplete="name">
+    <label for="peran">Peran</label>
+    <select id="peran" name="peran" required><option value="">Pilih peran…</option><option>Apoteker</option><option>Perawat</option><option>Dokter</option><option>Lainnya</option></select>
+    <button class="btn" type="submit">Verifikasi &amp; mulai</button>
+  </form></section>`;
+}
+
+const FLUIDS = {'D5W': 'D5W (Dekstrosa 5%)', 'D5½S': 'D5½S (Dekstrosa 5% + NaCl 0,45%)', 'NS': 'NS (NaCl 0,9%)', 'LR': 'LR (Ringer Laktat)'};
+const UNITS = ['mg/mL', 'mcg/mL', 'g/L', 'mg/L', 'units/mL', 'mEq/mL', 'mmol/mL', '%'];
+const newForm = () => ({n: 2, drugs: Array.from({length: 5}, () => ({name: '', conc: '', unit: 'mg/mL'})), fluid: '', vol: ''});
+S.form = newForm(); S.errs = []; S.result = null;
+
+function drugRow(i) {
+  const d = S.form.drugs[i], req = i < 2 ? 'required' : '';
+  return `<fieldset class="drug"><legend>Obat ${i + 1}${i < 2 ? ' *' : ''}</legend><div class="g3">
+    <div><label for="dn${i}">Nama obat</label><input id="dn${i}" data-f="name" data-i="${i}" type="text" list="drugs" value="${esc(d.name)}" ${req} autocomplete="off" placeholder="Ketik nama obat…"></div>
+    <div><label for="dc${i}">Konsentrasi</label><input id="dc${i}" data-f="conc" data-i="${i}" type="number" min="0" step="any" inputmode="decimal" value="${esc(d.conc)}"></div>
+    <div><label for="du${i}">Satuan</label><select id="du${i}" data-f="unit" data-i="${i}">${UNITS.map(u => `<option${u === d.unit ? ' selected' : ''}>${u}</option>`).join('')}</select></div>
+  </div></fieldset>`;
+}
+
+function pairs(list) {
+  const out = [];
+  for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) out.push([list[i], list[j], status(list[i], list[j])]);
+  return out;
+}
+
+const GROUPS = [
+  {label: 'antibiotik β-laktam', items: ['Ampisilin', 'Ampisilin-sulbaktam', 'Aztreonam', 'Cefazolin', 'Cefotaxime', 'Cefotetan', 'Cefoxitin', 'Ceftazidime', 'Ceftizoxime', 'Ceftriaxone']},
+  {label: 'antijamur', items: ['Ampho B', 'Ampho B kolesteril sulfat', 'Anidulafungin', 'Kaspofungin']},
+  {label: 'elektrolit kalsium', items: ['Ca klorida', 'Ca glukonat']}
+];
+const isF = n => n in FLUIDS;
+
+function reason(a, b, s) {
+  if (s === 'C') return '-';
+  if (s === 'K') return 'Data saling bertentangan (tercatat kompatibel sekaligus inkompatibel). Anggap tidak aman.';
+  if (s === 'U') return 'Data tidak konsisten; bisa kompatibel atau inkompatibel tergantung kondisi.';
+  if (s === 'N') return 'Kombinasi tidak tercantum pada data.';
+  const has = n => a === n || b === n, ca = ['Ca glukonat', 'Ca klorida'];
+  if (has('Ceftriaxone') && ca.some(has)) return 'Ceftriaxone dapat membentuk endapan dengan kalsium.';
+  const ampho = ['Ampho B', 'Ampho B kolesteril sulfat'].find(has);
+  if (ampho) {
+    const o = a === ampho ? b : a;
+    return isF(o) || ca.includes(o) ? 'Amphotericin B mengendap bila bertemu garam/elektrolit; hanya stabil dalam D5W.' : 'Amphotericin B bersifat koloid/lipid dan mudah menggumpal atau mengendap bila dicampur obat lain.';
+  }
+  if (has('Kaspofungin') && (has('D5W') || has('D5½S'))) return 'Kaspofungin tidak stabil dalam larutan yang mengandung dekstrosa.';
+  if (has('Acyclovir')) return 'Acyclovir sangat basa (pH ±11) sehingga mengubah pH campuran dan memicu endapan.';
+  if (has('Amiodarone')) return 'Amiodarone sensitif terhadap pH dan mudah mengendap saat bertemu obat/cairan tertentu.';
+  return 'Dilaporkan terjadi perubahan fisik/kimia (endapan, kekeruhan, atau perubahan warna).';
+}
+
+// Pengganti: sekelas dan tercatat kompatibel (C) dengan seluruh komponen lain pada sediaan
+function recoView(R) {
+  const bad = R.pairs.filter(p => p[2] === 'X' || p[2] === 'K');
+  if (!bad.length) return '';
+  const involved = new Set(bad.flatMap(p => [p[0], p[1]]));
+  const comps = [...R.drugs.map(d => d.name), R.fluid];
+  const items = comps.filter(n => involved.has(n)).map(n => {
+    const g = GROUPS.find(x => x.items.includes(n));
+    const pool = isF(n) ? Object.keys(FLUIDS) : (g ? g.items : []);
+    const others = comps.filter(x => x !== n);
+    const cand = pool.filter(c => c !== n && !comps.includes(c) && others.every(o => status(c, o) === 'C'));
+    const kind = isF(n) ? 'cairan infus' : (g ? g.label : '');
+    return `<li><strong>${esc(n)}</strong>${kind ? ` (${esc(kind)})` : ''}: ${cand.length ? esc(cand.join(', ')) : 'tidak ada pengganti sekelas yang tercatat kompatibel dengan seluruh komponen lain.'}</li>`;
+  });
+  return `<h2 style="margin-top:16px">Rekomendasi pengganti</h2><ul>${items.join('')}</ul>
+    <p class="muted">Berdasarkan data kompatibilitas saja. Pemilihan pengganti harus atas persetujuan dokter/apoteker karena indikasi, dosis, dan spektrum dapat berbeda.</p>`;
+}
+
+function resultView() {
+  const R = S.result;
+  if (!R) return `<p class="muted">Isi form lalu tekan “Cek kompatibilitas”.</p>`;
+  const has = k => R.pairs.some(x => x[2] === k);
+  let v;
+  if (has('X') || has('K')) v = `<div class="banner bad">Jangan dicampur / diberikan bersamaan.<small>Setidaknya satu pasangan dilaporkan inkompatibel atau datanya bertentangan.</small></div>`;
+  else if (has('U') || has('N')) v = `<div class="banner warn">Tidak dapat dipastikan.<small>Ada pasangan tanpa data atau dengan data bertentangan. Konsultasikan ke apoteker.</small></div>`;
+  else v = `<div class="banner ok">Seluruh pasangan tercatat mungkin kompatibel (C).<small>Verifikasi kembali sebelum pencampuran atau pemberian.</small></div>`;
+  return v + `<h2>Sediaan yang diperiksa</h2><div class="tbl"><table><thead><tr><th>Komponen</th><th>Nama</th><th>Konsentrasi / volume</th></tr></thead><tbody>${
+    R.drugs.map(d => `<tr><td>Obat ${d.no}</td><td>${esc(d.name)}</td><td>${d.conc !== '' ? esc(d.conc) + ' ' + esc(d.unit) : '-'}</td></tr>`).join('')}
+    <tr><td>Cairan infus</td><td>${esc(R.fluid)}</td><td>${R.vol !== '' ? esc(R.vol) + ' mL' : '-'}</td></tr></tbody></table></div>
+    <h2 style="margin-top:16px">Hasil per pasangan</h2><div class="tbl"><table><thead><tr><th>Pasangan</th><th>Hasil</th><th>Alasan</th></tr></thead><tbody>${
+    R.pairs.map(([a, b, s]) => `<tr><td>${esc(a)} + ${esc(b)}</td><td>${badge(s)}</td><td>${esc(reason(a, b, s))}</td></tr>`).join('')}</tbody></table></div>
+    ${recoView(R)}
+    <p class="muted">Alasan bersifat ringkasan umum. Status kompatibilitas tidak membedakan konsentrasi dan volume; keduanya dicatat sebagai dokumentasi dan perlu dinilai oleh apoteker.</p>
+    <p class="muted">Diperiksa oleh ${esc(S.who.nama)} (${esc(S.who.peran)}) · ${new Date(R.at).toLocaleString('id-ID')}</p>
+    <button class="btn sec noprint" data-act="print">Cetak hasil</button>`;
+}
+
+function readyView() {
+  const F = S.form;
+  return `<section class="card">
+  <h1>Cek kompatibilitas</h1>
+  <p class="muted">Isi obat, konsentrasi, dan cairan infus. Tanda * wajib diisi.</p>
+  ${S.errs.length ? `<div class="banner bad" role="alert">${S.errs.map(esc).join('<br>')}</div>` : ''}
+  <form id="cf" novalidate>
+    <datalist id="drugs">${S.db.drugs.map(i => `<option value="${esc(i)}">`).join('')}</datalist>
+    ${Array.from({length: F.n}, (_, i) => drugRow(i)).join('')}
+    <div class="row noprint">
+      ${F.n < 5 ? `<button type="button" class="btn sec sm" data-act="more">+ Tambah obat ${F.n + 1}</button>` : ''}
+      ${F.n > 2 ? `<button type="button" class="btn sec sm" data-act="less">Hapus obat ${F.n}</button>` : ''}
+    </div>
+    <fieldset class="drug"><legend>Cairan infus *</legend><div class="g2">
+      <div><label for="fl">Cairan infus</label><select id="fl" data-f="fluid"><option value="">Pilih cairan…</option>${Object.entries(FLUIDS).map(([k, v]) => `<option value="${esc(k)}"${k === F.fluid ? ' selected' : ''}>${esc(v)}</option>`).join('')}</select></div>
+      <div><label for="vl">Volume cairan infus (mL)</label><input id="vl" data-f="vol" type="number" min="0" step="any" inputmode="decimal" value="${esc(F.vol)}"></div>
+    </div></fieldset>
+    <div class="row"><button class="btn" type="submit">Cek kompatibilitas</button><button class="btn sec" type="button" data-act="clear">Kosongkan</button></div>
+  </form></section>
+  <section class="card" id="res"><h2>Hasil</h2>${resultView()}</section>`;
+}
+
+function errorView() {
+  return `<section class="card"><h1>Data tidak dapat dimuat</h1><div class="banner bad">${esc(S.err)}</div>
+  <p class="muted">Pastikan file <code>data.js</code> berada satu folder dengan <code>index.html</code>, lalu coba lagi.</p>
+  <button class="btn" data-act="reload">Muat ulang</button></section>`;
+}
+
+function render(focus) {
+  try {
+    $who.innerHTML = S.who ? `Terverifikasi: <strong>${esc(S.who.nama)}</strong> (${esc(S.who.peran)}) <button class="btn sec sm noprint" data-act="reverify">Ganti</button>` : '';
+    $app.innerHTML = {loading: () => '<p class="muted">Memuat data…</p>', error: errorView, verify: verifyView, ready: readyView}[S.phase]();
+    if (focus) document.getElementById(focus)?.focus();
+  } catch (e) {
+    $app.innerHTML = `<div class="banner bad">Terjadi kesalahan tampilan: ${esc(e.message)}</div><button class="btn" data-act="reload">Muat ulang</button>`;
+  }
+}
+
+$app.addEventListener('submit', e => {
+  e.preventDefault();
+  if (e.target.id === 'vf') {
+    const f = new FormData(e.target);
+    S.who = {nama: String(f.get('nama')).trim(), peran: f.get('peran'), at: Date.now()};
+    if (!S.who.nama) return;
+    store.set(S.who); S.phase = 'ready'; render();
+  } else if (e.target.id === 'cf') {
+    const F = S.form, errs = [], drugs = [];
+    for (let i = 0; i < F.n; i++) {
+      const d = F.drugs[i], name = d.name.trim();
+      if (!name) { if (i < 2) errs.push(`Obat ${i + 1} wajib diisi.`); continue; }
+      const hit = S.db.drugs.find(x => x.toLowerCase() === name.toLowerCase());
+      if (!hit) { errs.push(`Obat ${i + 1}: "${name}" tidak ada dalam data. Pilih dari daftar yang disarankan.`); continue; }
+      if (drugs.some(x => x.name === hit)) errs.push(`Obat ${i + 1}: ${hit} sudah dipilih pada bagian lain.`);
+      if (d.conc !== '' && !(+d.conc > 0)) errs.push(`Obat ${i + 1}: konsentrasi harus lebih dari 0.`);
+      d.name = hit; drugs.push({no: i + 1, name: hit, conc: d.conc, unit: d.unit});
+    }
+    if (!F.fluid) errs.push('Cairan infus wajib dipilih.');
+    if (F.vol !== '' && !(+F.vol > 0)) errs.push('Volume cairan infus harus lebih dari 0.');
+    S.errs = errs;
+    S.result = errs.length ? null : {drugs, fluid: F.fluid, vol: F.vol, at: Date.now(), pairs: pairs([...drugs.map(d => d.name), F.fluid])};
+    render();
+    if (!errs.length) document.getElementById('res')?.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+});
+
+// Simpan isi form ke state agar tidak hilang saat tampilan dirender ulang
+$app.addEventListener('input', e => {
+  const t = e.target, f = t.dataset.f;
+  if (!f) return;
+  if (f === 'fluid' || f === 'vol') S.form[f] = t.value; else S.form.drugs[+t.dataset.i][f] = t.value;
+  if (S.result) { S.result = null; const r = document.getElementById('res'); if (r) r.innerHTML = `<h2>Hasil</h2>${resultView()}`; }
+});
+
+$app.addEventListener('click', e => bar(e.target.closest('[data-act]')));
+$who.addEventListener('click', e => bar(e.target.closest('[data-act]')));
+function bar(b) {
+  if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'more') { S.form.n++; S.result = null; render('dn' + (S.form.n - 1)); return; }
+  if (a === 'less') { S.form.drugs[S.form.n - 1] = {name: '', conc: '', unit: 'mg/mL'}; S.form.n--; S.result = null; }
+  else if (a === 'clear') { S.form = newForm(); S.errs = []; S.result = null; }
+  else if (a === 'print') return window.print();
+  else if (a === 'reverify') { store.del(); S.who = null; S.phase = 'verify'; }
+  else if (a === 'reload') return location.reload();
+  render();
+}
+
+try {
+  build();
+  S.who = store.get();
+  S.phase = S.who && S.who.nama ? 'ready' : 'verify';
+} catch (e) {
+  S.err = e.message; S.phase = 'error';
+}
+render();
+})();
+</script>
+</body>
+</html>
